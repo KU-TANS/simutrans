@@ -31,7 +31,7 @@ class way_desc_t;
 #define PAX_DESTINATIONS_SIZE (256) // size of the minimap (sparse array)
 
 enum city_cost {
-	HIST_CITICENS=0,       // total people
+	HIST_CITIZENS=0,       // total people
 	HIST_GROWTH,           // growth (just for convenience)
 	HIST_BUILDING,         // number of buildings
 	HIST_CITYCARS,         // number of citycars generated
