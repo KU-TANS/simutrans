@@ -37,7 +37,12 @@ class gui_schedule_entry_t;
  */
 class schedule_gui_t : public gui_frame_t, public action_listener_t
 {
-	enum mode_t {adding, inserting, removing, undefined_mode};
+	enum mode_t {
+		adding,
+		inserting,
+		removing,
+		undefined_mode
+	};
 
 	mode_t mode;
 

@@ -241,6 +241,7 @@ schedule_gui_t::schedule_gui_t(schedule_t* schedule_, player_t* player_, convoih
 	stats(new schedule_gui_stats_t() ),
 	scrolly(stats)
 {
+	scrolly.set_maximize( true );
 	schedule = NULL;
 	player   = NULL;
 	if (schedule_) {

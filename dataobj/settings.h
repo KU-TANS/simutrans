@@ -49,7 +49,11 @@ class settings_t
 	friend class welt_gui_t;
 
 public:
-	typedef enum { HEIGHT_BASED=0, HUMIDITY_BASED, MAP_BASED } climate_generate_t;
+	typedef enum {
+		HEIGHT_BASED = 0,
+		HUMIDITY_BASED,
+		MAP_BASED
+	} climate_generate_t;
 
 private:
 	sint32 size_x, size_y;
@@ -523,7 +527,11 @@ public:
 	bool is_separate_halt_capacities() const { return separate_halt_capacities ; }
 
 	// allowed modes are 0,1,2
-	enum { TO_PREVIOUS=0, TO_TRANSFER, TO_DESTINATION };
+	enum {
+		TO_PREVIOUS = 0,
+		TO_TRANSFER,
+		TO_DESTINATION
+	};
 	uint8 get_pay_for_total_distance_mode() const { return pay_for_total_distance ; }
 
 	// do not take people to overcrowded destinations
