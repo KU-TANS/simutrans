@@ -1278,7 +1278,7 @@ DBG_DEBUG("karte_t::init()","built timeline");
 
 	nosave_warning = nosave = false;
 
-	dbg->error("karte_t::init()", "Creating factories ...");
+	dbg->message("karte_t::init()", "Creating factories ...");
 	factory_builder_t::new_world();
 
 	int consecutive_build_failures = 0;
@@ -6578,13 +6578,17 @@ uint8 karte_t::sp2num(player_t *player)
 void karte_t::load_heightfield(settings_t* const sets)
 {
 	sint16 w, h;
-	sint8 *h_field;
-	height_map_loader_t hml(sets);
+	sint8 *h_field = NULL;
+	const sint8 min_h = sets->get_minimumheight();
+	const sint8 max_h = sets->get_maximumheight();
+
+	height_map_loader_t hml(min_h, max_h, env_t::height_conv_mode);
+
 	if(hml.get_height_data_from_file(sets->heightfield.c_str(), (sint8)(sets->get_groundwater()), h_field, w, h, false )) {
 		sets->set_size(w,h);
 		// create map
 		init(sets,h_field);
-		delete [] h_field;
+		free(h_field);
 	}
 	else {
 		dbg->error("karte_t::load_heightfield()","Cant open file '%s'", sets->heightfield.c_str());
