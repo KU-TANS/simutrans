@@ -61,7 +61,7 @@ enum control_alignments_t {
 typedef uint16 control_alignment_t;
 
 // size of koordinates
-typedef short KOORD_VAL;
+typedef sint32 KOORD_VAL;
 
 
 struct clip_dimension {

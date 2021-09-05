@@ -14,6 +14,8 @@
 #include "../../simmenu.h"
 #include "../../simworld.h"
 #include "../../dataobj/scenario.h"
+#include "../../display/viewport.h"
+#include "../../gui/simwin.h"
 #include "../../player/simplay.h"
 
 #include "../../dataobj/environment.h"
@@ -41,14 +43,13 @@ void_t add_ai_message_at(player_t *player, const char* text, koord pos)
 	return void_t();
 }
 
-
-call_tool_init add_scenario_message(player_t* player, const char* text)
+call_tool_work add_scenario_message(player_t* player, const char* text)
 {
 	// build param string (see tool_add_message_t::init)
 	cbuffer_t buf;
 	buf.printf("%d,%s", message_t::scenario, text);
 
-	return call_tool_init(TOOL_ADD_MESSAGE | SIMPLE_TOOL, (const char*)buf, 0, player ? player : welt->get_active_player());
+	return call_tool_work(TOOL_ADD_MESSAGE | GENERAL_TOOL, (const char*)buf, 0, player ? player : welt->get_active_player(), koord3d::invalid);
 }
 
 void_t open_info_win_client(const char* tab, uint8 player_nr)
@@ -74,6 +75,34 @@ void_t open_info_win_at(const char* tab)
 void_t open_info_win()
 {
 	return open_info_win_client("", PLAYER_UNOWNED);
+}
+
+bool jump(koord pos)
+{
+	if(welt->is_within_limits(pos)) {
+		welt->get_viewport()->change_world_position(koord3d(pos,welt->min_hgt(pos)));
+		return true;
+	}
+	return false;
+}
+
+void_t close_all_windows()
+{
+	destroy_all_win(true);
+	return void_t();
+}
+
+void_t take_screenshot()
+{
+	display_snapshot( 0, 0, display_get_width(), display_get_height() );
+	return void_t();
+}
+
+void_t set_zoom(uint8 val)
+{
+	set_zoom_factor_safe(val);
+	welt->get_viewport()->metrics_updated();
+	return void_t();
 }
 
 void export_gui(HSQUIRRELVM vm, bool scenario)
@@ -144,5 +173,31 @@ void export_gui(HSQUIRRELVM vm, bool scenario)
 		*/
 		STATIC register_method(vm, &add_ai_message_at, "add_message_at");
 	}
+	
+	/**
+	* Jump view to given position.
+	* This function succeeds only when the pos is within the map.
+	*
+	* @param position Position of the view on the map to jump to.
+	* @return true if succeeded.
+	*/
+	STATIC register_method(vm, &jump, "jump");
+	
+	/**
+	* Close all windows on the view.
+	*/
+	STATIC register_method(vm, &close_all_windows, "close_all_windows");
+	
+	/**
+	* Take a screen shot.
+	*/
+	STATIC register_method(vm, &take_screenshot, "take_screenshot");
+	
+	/**
+	* Set zoom factor.
+	*
+	* @param zoom Zoom factor to set.
+	*/
+	STATIC register_method(vm, &set_zoom, "set_zoom");
 	end_class(vm);
 }

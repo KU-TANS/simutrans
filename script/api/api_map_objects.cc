@@ -67,10 +67,10 @@ template<class D> struct access_objs {
 				// object or tile disappeared: clear userpointer
 				sq_setinstanceup(vm, index, NULL);
 			}
-			sq_raise_error(vm, "Object of type %s vanished from (%s).", param<D>::squirrel_type, pos.get_str());
+			sq_raise_error(vm, "Object of type %s vanished from (%s).", param<D*>::squirrel_type(), pos.get_str());
 		}
 		else {
-			sq_raise_error(vm, "Object is not of type %s.", param<D>::squirrel_type);
+			sq_raise_error(vm, "Object is not of type %s.", param<D*>::squirrel_type);
 		}
 		return NULL;
 	}
@@ -446,6 +446,7 @@ void export_map_objects(HSQUIRRELVM vm)
 	/**
 	 * Constructor. Implemented by derived classes.
 	 * Fails if no object of precisely the requested type is on the tile.
+	 * If there is more than one object of this type on the tile then it will return the first.
 	 * @param x
 	 * @param y
 	 * @param z
@@ -637,6 +638,12 @@ void export_map_objects(HSQUIRRELVM vm)
 	 * @returns object descriptor.
 	 */
 	register_method(vm, &weg_t::get_desc, "get_desc");
+	/**
+	 * Returns maximal allowed speed on this way.
+	 * Takes limits from crossings, overhead-wires, bridges, etc, into account.
+	 * @returns max speed in kmh.
+	 */
+	register_method(vm, &weg_t::get_max_speed, "get_max_speed");
 	end_class(vm);
 
 

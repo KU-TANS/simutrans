@@ -19,16 +19,16 @@ You should try OTRP because...
 The thread in Simutrans International Forum: https://forum.simutrans.com/index.php?topic=16659.0  
 Twitter hashtag :  [#OTRPatch](https://twitter.com/hashtag/OTRPatch?src=hash)  
 
-As of version 29_4, OTRP is based on Simutrans Standard nightly r9281.
+As of version 30, OTRP is based on Simutrans Standard nightly r9281.
  [Please refer here](cherry-picked-commits.txt) for the cherry-picked commits.
 
 # Download
 In addition to the executable binary, the ribi-arrow pak is required. Please download it from https://drive.google.com/open?id=0B_rSte9xAhLDanhta1ZsSVcwdzg and put it in your pakset folder.  
 
-You can download the OTRP executable binary from the links below. **(2021 March 13th, updated to ver 29_5.)**  
-windows(GDI 64bit): https://osdn.net/projects/otrp/downloads/74762/sim-WinGDI64-OTRPv29_5.exe/   
-mac: https://osdn.net/projects/otrp/downloads/74762/sim-mac-OTRPv29_5.zip/  
-Linux: https://osdn.net/projects/otrp/downloads/74762/sim-linux-OTRPv29_5.zip/  
+You can download the OTRP executable binary from the links below. **(2021 August 15th, updated to ver 30.)**  
+windows(GDI 64bit): https://osdn.net/projects/otrp/downloads/75752/sim-WinGDI64-OTRPv30.exe/  
+mac: https://osdn.net/projects/otrp/downloads/75752/sim-mac-OTRPv30.zip/  
+Linux: https://osdn.net/projects/otrp/downloads/75752/sim-linux-OTRPv30.zip/  
 source code: https://github.com/teamhimeh/simutrans/tree/OTRP-distribute  
 
 There is no special makeobj for OTRP. Please use one made for Simutrans Standard.
@@ -124,6 +124,8 @@ Finally, toggling "use same departure time for all stops" applies all departure 
 
 ## Squirrel API
 
+### I/O Library
+
 From OTRP v29_5，the [I/O library](http://www.squirrel-lang.org/squirreldoc/stdlib/stdiolib.html) of Squirrel Standard Library is enabled. To handle multi-byte characters, the following methods are added to `file` class.
 
 - `file.readstr(n)` ... Read up to n（`integer` ）bytes from the file and return text as `String` .
@@ -142,7 +144,12 @@ myfile.writestr("Welcome to simutrans.")
 myfile.close()  
 ```
 
-## 
+### gui class
+
+- static void **jump** (coord pos) ... jump to the designated position.
+- static void **close_all_windows** ()
+- static void **take_screenshot** ()
+- static void **set_zoom** (int val) ... set zoom ratio of the view. `val` is between 0 (min zoom) and 9 (max zoom).
 
 ## Script Generator
 This is a feature to convert the slopes, ways, wayobjs, signs, and stations in the map to a squirrel script.
@@ -181,7 +188,6 @@ Most of these are stored in-game.
 	- U-turns at intersections are given a weight of **1**.
 	- **cr** sets the weight given when there is a car stopped on the road. The default value is 20.
 	- When the road is empty, the weight is calculated by multiplying the **speed limit of the road** by *sp**, the product of which is then added to **va**. The default value of va is 100, and the default value of sp is 0.
-	
 ## Other
 - **advance_to_end** : When this is enabled, trains always advance to the ends of platforms. When false, trains stop at the exact coordinates specified in the schedule as long as the platform is long enough to accomodate the entire convoy. This is the same behavior as in Simutrans Standard, and is enabled by default.
 - **routecost_halt**, **routecost_wait**: These settings determine passenger routing behavior. A cost is assigned to each stop and transfer made along a journey, with passengers choosing journeys with the lowest cost. routecost_halt is the cost of each stop; the default value is 1. routecost_wait is the cost of each transfer, with a default value of 8.

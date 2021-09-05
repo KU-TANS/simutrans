@@ -17,6 +17,7 @@
 
 namespace script_api {
 	declare_enum_param(grund_t::flag_values, uint8, "flags");
+	declare_specialized_param(depot_t*, "t|x|y", "depot_x");
 };
 
 using namespace script_api;
@@ -147,6 +148,9 @@ void export_tiles(HSQUIRRELVM vm)
 	register_method(vm, &grund_t::suche_obj, "find_object");
 	/**
 	 * Remove object of given type from the tile.
+	 * Type @p type must be one of the following: ::mo_label, ::mo_pedestrian, ::mo_city_car, ::mo_powerline, ::mo_transformer_s,
+	 *  ::mo_transformer_c, ::mo_signal, ::mo_roadsign, ::mo_wayobj, ::mo_tunnel, ::mo_bridge, ::mo_field, ::mo_building, ::mo_depot_rail.
+	 * Setting @p type to ::mo_depot_rail deletes depots of every type.
 	 * @param pl player that pays for removal
 	 * @param type object type
 	 * @returns null upon success, an error message otherwise
@@ -220,7 +224,12 @@ void export_tiles(HSQUIRRELVM vm)
 	 * @returns true if there is are two ways on the tile
 	 */
 	register_method<bool (grund_t::*)() const>(vm, &grund_t::has_two_ways, "has_two_ways");
-
+	/**
+	 * Returns way_x object on this tile of way type @p wt if present
+	 * @param wt waytype
+	 * @returns way object or null
+	 */
+	register_method(vm, &grund_t::get_weg, "get_way");
 	/**
 	 * Return directions in which ways on this tile go. One-way signs are ignored here.
 	 * @param wt waytype
@@ -249,6 +258,11 @@ void export_tiles(HSQUIRRELVM vm)
 	 * @return neighbour tile or null
 	 */
 	register_method(vm, &get_neighbour, "get_neighbour", true);
+	/**
+	 * Returns depot_x object on this tile if any depot is present.
+	 * @returns depot object or null
+	 */
+	register_method(vm, &grund_t::get_depot, "get_depot");
 	/**
 	 * Checks whether player can delete all objects on the tile.
 	 * @param pl player

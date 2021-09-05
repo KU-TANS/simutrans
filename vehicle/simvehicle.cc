@@ -3371,7 +3371,7 @@ bool rail_vehicle_t::is_target(const grund_t *gr,const grund_t *prev_gr) const
 				if(  !gr->get_neighbour(to,get_waytype(),ribi)  ||  !(to->get_halt()==target_halt)  ||  (to->get_weg(get_waytype())->get_ribi_maske() & ribi_type(dir))!=0  ) {
 					// end of stop: Is it long enough?
 					// end of stop could be also signal!
-					uint16 tiles = cnv->get_tile_length();
+					uint16 tiles = cnv->get_tile_length(true);
 					while(  tiles>1  ) {
 						if(  gr->get_weg(get_waytype())->get_ribi_maske() & ribi  ||  !gr->get_neighbour(to,get_waytype(),ribi_t::backward(ribi))  ||  !(to->get_halt()==target_halt)  ) {
 							return false;

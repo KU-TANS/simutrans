@@ -53,7 +53,7 @@ class schedule_gui_t : public gui_frame_t, public action_listener_t
 
 	// always needed
 	button_t bt_add, bt_insert, bt_remove; // stop management
-	button_t bt_return;
+	button_t bt_revert, bt_return;
 	button_t bt_wait_load;
 
 	gui_label_t lb_wait, lb_load;

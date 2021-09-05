@@ -10,6 +10,7 @@
  * @section api-trunk Current trunk
  *
  * - Feature: scripted tools
+ * - Added @ref way_x::get_max_speed
  * - Added @ref wayobj_desc_x, @ref wayobj_x, @ref command_x::build_wayobj to work with way-objects
  * - Added @ref factory_x::get_raw_name
  * - Added @ref tree_desc_x::get_price, @ref command_x::slope_get_price
@@ -28,6 +29,9 @@
  * - Added @ref command_x::build_road
  * - Added fields: @ref field_x
  * - Added powerlines: @ref powerline_x, @ref transformer_x, @ref factory_x::get_transformer, @ref factory_x::is_transformer_connected
+ * - Added @ref way_x::get_transported_goods, @ref way_x::get_convoys_passed
+ * - Added @ref tile_x::get_way, @ref tile_x::get_depot
+ * - Added @ref get_pakset_name, @ref player_x::get_type
  *
  * @section api-121 Release 120.1
  *

@@ -19,16 +19,16 @@
 本家フォーラム: https://forum.simutrans.com/index.php?topic=16659.0  
 Twitterハッシュタグ： [#OTRPatch](https://twitter.com/hashtag/OTRPatch?src=hash)
 
-version29_4現在，simutrans standard nightly r9281をベースにしています．  
+version30現在，simutrans standard nightly r9281をベースにしています．  
 追加で取り込んでいるコミットについては [こちらを参照](cherry-picked-commits.txt) してください．
 
 # ダウンロード
 実行には本体の他にribi-arrowアドオンが必要なので https://drive.google.com/open?id=0B_rSte9xAhLDanhta1ZsSVcwdzg からDLしてpakセットの中に突っ込んでください．  
 
-本体は下のリンクからどうぞ．**（2021年3月13日PM10時　ver29_5に更新）**  
-windows(GDI 64bit): https://osdn.net/projects/otrp/downloads/74762/sim-WinGDI64-OTRPv29_5.exe/   
-mac: https://osdn.net/projects/otrp/downloads/74762/sim-mac-OTRPv29_5.zip/  
-Linux: https://osdn.net/projects/otrp/downloads/74762/sim-linux-OTRPv29_5.zip/  
+本体は下のリンクからどうぞ．**（2021年8月15日PM9時　ver30に更新）**  
+windows(GDI 64bit): https://osdn.net/projects/otrp/downloads/75752/sim-WinGDI64-OTRPv30.exe/  
+mac: https://osdn.net/projects/otrp/downloads/75752/sim-mac-OTRPv30.zip/  
+Linux: https://osdn.net/projects/otrp/downloads/75752/sim-linux-OTRPv30.zip/  
 ソース: https://github.com/teamhimeh/simutrans/tree/OTRP-distribute  
 
 OTRP専用のmakeobjはありません．simutrans standardのmakeobjをご利用ください．
@@ -129,6 +129,8 @@ OTRPでは高度なスケジュール設定により，より柔軟な運行が�
 
 ## Squirrel API
 
+### IOライブラリ
+
 OTRP v29_5より，Squirrel Standard Libraryのうち，[I/Oライブラリ](http://www.squirrel-lang.org/squirreldoc/stdlib/stdiolib.html) が追加で利用できるようになっています．また，マルチバイト文字を扱うために`file` クラスに以下の関数が追加されています．
 
 - `file.readstr(n)` ... 最大n（`integer` ）バイトの文字列をファイルから読み，`String` で返します．
@@ -146,6 +148,15 @@ myfile = file("out.txt","w")
 myfile.writestr("Simutransへようこそ")
 myfile.close()  
 ```
+
+### guiクラス
+
+OTRP v29_6より、[guiクラス](http://dwachs.github.io/simutrans-sqapi-doc/classgui.html) に以下の関数が追加されています。
+
+- static void **jump** (coord pos) ... 指定された座標に画面をジャンプします。
+- static void **close_all_windows** () ... 画面中のすべてのウィンドウを閉じます。
+- static void **take_screenshot** () ... スクリーンショットを撮ります。
+- static void **set_zoom** (int val) ... 画面の拡大率を指定します。拡大率（`val`）は0（最小）〜9（最大）の10段階です。
 
 ## スクリプトジェネレーター
 
@@ -228,3 +239,4 @@ OTRPはSimutrans Standardからの派生物ですので，Standardのライセ�
 
 [1]:https://twitter.com/shingoushori
 [2]:https://twitter.com/hypersimu
+

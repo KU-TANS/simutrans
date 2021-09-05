@@ -479,6 +479,13 @@ void schedule_gui_t::init(schedule_t* schedule_, player_t* player, convoihandle_
 	
 	extract_advanced_settings(false);
 
+	add_table(2,1);
+
+	bt_revert.init(button_t::roundbox, "Revert schedule");
+	bt_revert.set_tooltip("Revert to original schedule");
+	bt_revert.add_listener(this);
+	add_component(&bt_revert);
+
 	// return tickets
 	if(  !env_t::hide_rail_return_ticket  ||  schedule->get_waytype()==road_wt  ||  schedule->get_waytype()==air_wt  ||  schedule->get_waytype()==water_wt  ) {
 		//  hide the return ticket on rail stuff, where it causes much trouble
@@ -487,6 +494,11 @@ void schedule_gui_t::init(schedule_t* schedule_, player_t* player, convoihandle_
 		bt_return.add_listener(this);
 		add_component(&bt_return);
 	}
+	else {
+		new_component<gui_fill_t>();
+	}
+
+	end_table();
 
 	// action button row
 	add_table(3,1)->set_force_equal_columns(true);
@@ -879,6 +891,18 @@ DBG_MESSAGE("schedule_gui_t::action_triggered()","comp=%p combo=%p",comp,&line_s
 	}
 	else if(comp == &numimp_max_speed) {
 		schedule->set_max_speed((uint16)p.i);
+	}
+	else if (comp == &bt_revert) {
+		// revert changes and tell listener
+		if (schedule) {
+			stats->highlight_schedule(false);
+			delete schedule;
+			schedule = NULL;
+		}
+		schedule = old_schedule->copy();
+		stats->schedule = schedule;
+		stats->update_schedule();
+		update_selection();
 	}
 	// recheck lines
 	if(  cnv.is_bound()  ) {
